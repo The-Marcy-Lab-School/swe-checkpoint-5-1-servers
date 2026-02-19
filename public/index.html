@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Manager</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header>
+    <h1>Item Manager</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Add an Item</h2>
+      <form id="item-form">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter item name" required>
+        </div>
+        <button type="submit">Add Item</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>All Items (<span id="item-count">0</span>)</h2>
+      <p id="error-message"></p>
+      <ul id="items-list"></ul>
+    </section>
+
+    <section id="item-details" class="hidden">
+      <h2>Item Details</h2>
+      <p>ID: <span id="detail-id"></span></p>
+      <p>Name: <span id="detail-name"></span></p>
+
+      <h3>Update Name</h3>
+      <form id="update-form">
+        <div>
+          <label for="new-name">New Name</label>
+          <input type="text" id="new-name" name="newName" placeholder="Enter new name" required>
+        </div>
+        <button type="submit">Update</button>
+      </form>
+      <button id="delete-btn" class="delete-btn">Delete This Item</button>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
