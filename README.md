@@ -138,23 +138,23 @@ npm run dev
 
 **Files you complete:**
 - `from-scratch/server/index.js` — Express app setup, middleware, and endpoint definitions
-- `from-scratch/server/models/Item.js` — In-memory data model
-- `from-scratch/server/controllers/itemControllers.js` — Controller functions
+- `from-scratch/server/models/Pet.js` — In-memory data model
+- `from-scratch/server/controllers/petControllers.js` — Controller functions
 
 ### API Reference
 
 The frontend expects the following API endpoints to exist on your server:
 
-| Method   | Endpoint         | Request Body        | Description             | Success Status |
-| -------- | ---------------- | ------------------- | ----------------------- | -------------- |
-| `POST`   | `/api/items`     | `{ "name": "..." }` | Create a new item       | `201`          |
-| `GET`    | `/api/items`     | —                   | Get all items           | `200`          |
-| `GET`    | `/api/items/:id` | —                   | Get a single item by ID | `200`          |
-| `PATCH`  | `/api/items/:id` | `{ "name": "..." }` | Update an item's name   | `200`          |
-| `DELETE` | `/api/items/:id` | —                   | Delete an item          | `200`          |
+| Method   | Endpoint        | Request Body        | Description            | Success Status |
+| -------- | --------------- | ------------------- | ---------------------- | -------------- |
+| `POST`   | `/api/pets`     | `{ "name": "..." }` | Create a new pet       | `201`          |
+| `GET`    | `/api/pets`     | —                   | Get all pets           | `200`          |
+| `GET`    | `/api/pets/:id` | —                   | Get a single pet by ID | `200`          |
+| `PATCH`  | `/api/pets/:id` | `{ "name": "..." }` | Update a pet's name    | `200`          |
+| `DELETE` | `/api/pets/:id` | —                   | Delete a pet           | `200`          |
 
 **Error responses:**
-- Return `404` with `{ "message": "..." }` when an item is not found
+- Return `404` with `{ "message": "..." }` when a pet is not found
 - Return `400` with `{ "message": "..." }` when a required field (`name`) is missing
 
 ### Step 1: Set Up the Express App (6 pts)
@@ -166,19 +166,19 @@ In `from-scratch/server/index.js`:
 
 ### Step 2: Build the Model (8 pts)
 
-In `from-scratch/server/models/Item.js`:
+In `from-scratch/server/models/Pet.js`:
 1. Create an `id` counter and a `getId()` helper function
-2. Create an in-memory array with 2-3 starter items (each with an `id` and `name`)
+2. Create an in-memory array with 2-3 starter pets (each with an `id` and `name`)
 3. Implement all 5 static methods: `create`, `list`, `find`, `update`, `delete`
 4. Model methods should NOT use `req` or `res` — they only manage data
 
 ### Step 3: Build the Controllers (10 pts)
 
-In `from-scratch/server/controllers/itemControllers.js`:
-1. Import the `Item` model
-2. Implement all 5 controller functions: `createItem`, `listItems`, `getItem`, `updateItem`, `deleteItem`
+In `from-scratch/server/controllers/petControllers.js`:
+1. Import the `Pet` model
+2. Implement all 5 controller functions: `createPet`, `listPets`, `getPet`, `updatePet`, `deletePet`
 3. Each controller should parse inputs from `req`, call the appropriate model method, and send the response with the correct status code
-4. Handle error cases: return `400` for missing `name`, return `404` for items not found
+4. Handle error cases: return `400` for missing `name`, return `404` for pets not found
 
 ### Step 4: Define REST Endpoints (4 pts)
 
@@ -192,12 +192,12 @@ In `from-scratch/server/index.js`:
 After your server is working, use Postman to test each endpoint. Take screenshots or export your Postman collection and include them in a `postman/` folder.
 
 You must demonstrate:
-1. A successful `POST` creating a new item (showing 201 status)
-2. A `GET` retrieving all items
+1. A successful `POST` creating a new pet (showing 201 status)
+2. A `GET` retrieving all pets
 3. A `GET` with an invalid ID showing a 404 response
-4. A `PATCH` successfully updating an item
-5. A `DELETE` removing an item
-6. A follow-up `GET` confirming the item was deleted
+4. A `PATCH` successfully updating a pet
+5. A `DELETE` removing a pet
+6. A follow-up `GET` confirming the pet was deleted
 
 ### Code Grading Checklist (34 points)
 
@@ -211,21 +211,21 @@ You must demonstrate:
 
 **Model (8 pts)**
 - [ ] In-memory array is private to the module (not exported directly)
-- [ ] `create()` returns a new item with a unique `id`
-- [ ] `list()` returns a copy of all items
-- [ ] `find()` returns a single item by ID or `undefined`
-- [ ] `update()` modifies and returns the item, or returns `null` if not found
-- [ ] `delete()` removes and returns the item, or returns `null` if not found
+- [ ] `create()` returns a new pet with a unique `id`
+- [ ] `list()` returns a copy of all pets
+- [ ] `find()` returns a single pet by ID or `undefined`
+- [ ] `update()` modifies and returns the pet, or returns `null` if not found
+- [ ] `delete()` removes and returns the pet, or returns `null` if not found
 - [ ] IDs are unique and auto-incrementing
 - [ ] Model methods do not use `req` or `res` (proper separation of concerns)
 
 **Controllers (10 pts)**
 - [ ] Controllers import and use the model (no direct array manipulation)
-- [ ] `createItem` reads from `req.body`, returns `201` status with the new item
-- [ ] `listItems` sends the full list of items
-- [ ] `getItem` parses `req.params.id`, returns `404` with message if not found
-- [ ] `updateItem` parses params and body, returns `404` if not found
-- [ ] `deleteItem` parses `req.params.id`, returns `404` if not found
+- [ ] `createPet` reads from `req.body`, returns `201` status with the new pet
+- [ ] `listPets` sends the full list of pets
+- [ ] `getPet` parses `req.params.id`, returns `404` with message if not found
+- [ ] `updatePet` parses params and body, returns `404` if not found
+- [ ] `deletePet` parses `req.params.id`, returns `404` if not found
 - [ ] All controllers send appropriate status codes
 - [ ] Request body validation (returns `400` if `name` is missing for create/update)
 - [ ] Controllers are exported and imported properly
@@ -238,9 +238,9 @@ You must demonstrate:
 - [ ] Routes are defined after middleware registration
 
 **Postman Testing (6 pts)**
-- [ ] `POST` screenshot shows `201` status and created item
-- [ ] `GET` all screenshot shows the list of items
+- [ ] `POST` screenshot shows `201` status and created pet
+- [ ] `GET` all screenshot shows the list of pets
 - [ ] `GET` by invalid ID shows `404` status and error message
-- [ ] `PATCH` screenshot shows updated item
-- [ ] `DELETE` screenshot shows the deleted item
+- [ ] `PATCH` screenshot shows updated pet
+- [ ] `DELETE` screenshot shows the deleted pet
 - [ ] Follow-up `GET` confirms deletion

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-// TODO: Import your controllers from ./controllers/itemControllers.js
+// TODO: Import your controllers from ./controllers/petControllers.js
 
 
 const app = express();
@@ -26,13 +26,13 @@ const app = express();
 // Endpoints
 /////////////////////
 
-// TODO: Define RESTful endpoints for managing items.
+// TODO: Define RESTful endpoints for managing pets.
 // You will need endpoints for:
-//   - POST   /api/items      → create a new item
-//   - GET    /api/items      → get all items
-//   - GET    /api/items/:id  → get a single item by ID
-//   - PATCH  /api/items/:id  → update an item by ID
-//   - DELETE /api/items/:id  → delete an item by ID
+//   - POST   /api/pets      → create a new pet
+//   - GET    /api/pets      → get all pets
+//   - GET    /api/pets/:id  → get a single pet by ID
+//   - PATCH  /api/pets/:id  → update a pet by ID
+//   - DELETE /api/pets/:id  → delete a pet by ID
 
 
 const port = 8080;

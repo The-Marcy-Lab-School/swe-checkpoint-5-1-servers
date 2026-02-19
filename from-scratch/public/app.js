@@ -5,12 +5,12 @@
 // app will work without any changes.
 // ============================================
 
-let selectedItemId = null;
+let selectedPetId = null;
 
-const fetchAllItems = async () => {
+const fetchAllPets = async () => {
   try {
-    const response = await fetch('/api/items');
-    if (!response.ok) throw new Error('Failed to fetch items');
+    const response = await fetch('/api/pets');
+    if (!response.ok) throw new Error('Failed to fetch pets');
     return await response.json();
   } catch (error) {
     showError(error.message);
@@ -18,10 +18,10 @@ const fetchAllItems = async () => {
   }
 };
 
-const fetchItemById = async (id) => {
+const fetchPetById = async (id) => {
   try {
-    const response = await fetch(`/api/items/${id}`);
-    if (!response.ok) throw new Error(`Item with id ${id} not found`);
+    const response = await fetch(`/api/pets/${id}`);
+    if (!response.ok) throw new Error(`Pet with id ${id} not found`);
     return await response.json();
   } catch (error) {
     showError(error.message);
@@ -29,14 +29,14 @@ const fetchItemById = async (id) => {
   }
 };
 
-const createItem = async (name) => {
+const createPet = async (name) => {
   try {
-    const response = await fetch('/api/items', {
+    const response = await fetch('/api/pets', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name }),
     });
-    if (!response.ok) throw new Error('Failed to create item');
+    if (!response.ok) throw new Error('Failed to create pet');
     return await response.json();
   } catch (error) {
     showError(error.message);
@@ -44,14 +44,14 @@ const createItem = async (name) => {
   }
 };
 
-const updateItem = async (id, name) => {
+const updatePet = async (id, name) => {
   try {
-    const response = await fetch(`/api/items/${id}`, {
+    const response = await fetch(`/api/pets/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name }),
     });
-    if (!response.ok) throw new Error('Failed to update item');
+    if (!response.ok) throw new Error('Failed to update pet');
     return await response.json();
   } catch (error) {
     showError(error.message);
@@ -59,10 +59,10 @@ const updateItem = async (id, name) => {
   }
 };
 
-const deleteItem = async (id) => {
+const deletePet = async (id) => {
   try {
-    const response = await fetch(`/api/items/${id}`, { method: 'DELETE' });
-    if (!response.ok) throw new Error('Failed to delete item');
+    const response = await fetch(`/api/pets/${id}`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Failed to delete pet');
     return await response.json();
   } catch (error) {
     showError(error.message);
@@ -78,89 +78,89 @@ const clearError = () => {
   document.querySelector('#error-message').textContent = '';
 };
 
-const renderItems = (items) => {
-  const list = document.querySelector('#items-list');
-  const count = document.querySelector('#item-count');
+const renderPets = (pets) => {
+  const list = document.querySelector('#pets-list');
+  const count = document.querySelector('#pet-count');
 
   list.innerHTML = '';
-  count.textContent = items.length;
+  count.textContent = pets.length;
 
-  items.forEach((item) => {
+  pets.forEach((pet) => {
     const li = document.createElement('li');
-    li.textContent = `${item.name} (id: ${item.id})`;
-    li.dataset.itemId = item.id;
+    li.textContent = `${pet.name} (id: ${pet.id})`;
+    li.dataset.petId = pet.id;
     list.append(li);
   });
 };
 
-const renderItemDetails = (item) => {
-  const detailsSection = document.querySelector('#item-details');
+const renderPetDetails = (pet) => {
+  const detailsSection = document.querySelector('#pet-details');
   detailsSection.classList.remove('hidden');
-  document.querySelector('#detail-id').textContent = item.id;
-  document.querySelector('#detail-name').textContent = item.name;
-  selectedItemId = item.id;
+  document.querySelector('#detail-id').textContent = pet.id;
+  document.querySelector('#detail-name').textContent = pet.name;
+  selectedPetId = pet.id;
 };
 
 const hideDetails = () => {
-  document.querySelector('#item-details').classList.add('hidden');
-  selectedItemId = null;
+  document.querySelector('#pet-details').classList.add('hidden');
+  selectedPetId = null;
 };
 
 const main = async () => {
-  // Load and render all items on page load
-  const items = await fetchAllItems();
-  renderItems(items);
+  // Load and render all pets on page load
+  const pets = await fetchAllPets();
+  renderPets(pets);
 
-  // Click an item to view its details
-  document.querySelector('#items-list').addEventListener('click', async (e) => {
+  // Click a pet to view its details
+  document.querySelector('#pets-list').addEventListener('click', async (e) => {
     const li = e.target.closest('li');
     if (!li) return;
     clearError();
 
-    const id = Number(li.dataset.itemId);
-    const item = await fetchItemById(id);
-    if (item) renderItemDetails(item);
+    const id = Number(li.dataset.petId);
+    const pet = await fetchPetById(id);
+    if (pet) renderPetDetails(pet);
   });
 
-  // Create a new item via the form
-  document.querySelector('#item-form').addEventListener('submit', async (e) => {
+  // Create a new pet via the form
+  document.querySelector('#pet-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     clearError();
 
     const name = e.target.name.value;
-    await createItem(name);
+    await createPet(name);
 
-    const updated = await fetchAllItems();
-    renderItems(updated);
+    const updated = await fetchAllPets();
+    renderPets(updated);
     e.target.reset();
   });
 
-  // Update the selected item
+  // Update the selected pet
   document.querySelector('#update-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     clearError();
-    if (!selectedItemId) return;
+    if (!selectedPetId) return;
 
     const newName = e.target.newName.value;
-    const updated = await updateItem(selectedItemId, newName);
+    const updated = await updatePet(selectedPetId, newName);
     if (updated) {
-      renderItemDetails(updated);
-      const allItems = await fetchAllItems();
-      renderItems(allItems);
+      renderPetDetails(updated);
+      const allPets = await fetchAllPets();
+      renderPets(allPets);
     }
     e.target.reset();
   });
 
-  // Delete the selected item
+  // Delete the selected pet
   document.querySelector('#delete-btn').addEventListener('click', async () => {
     clearError();
-    if (!selectedItemId) return;
+    if (!selectedPetId) return;
 
-    await deleteItem(selectedItemId);
+    await deletePet(selectedPetId);
     hideDetails();
 
-    const updated = await fetchAllItems();
-    renderItems(updated);
+    const updated = await fetchAllPets();
+    renderPets(updated);
   });
 };
 
