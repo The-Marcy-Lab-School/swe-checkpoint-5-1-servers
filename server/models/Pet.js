@@ -1,5 +1,6 @@
-// TODO: Create a helper for generating unique IDs
-
+// A helper for generating unique IDs
+let id = 1;
+const getId = () => id++;
 
 // TODO: Create an in-memory "database" array with 2-3 starter pets.
 // Each pet should have an id (from getId) and a name.

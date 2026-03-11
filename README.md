@@ -2,15 +2,14 @@
 
 This is a 2-day checkpoint assessing your understanding of the first half of the Backend module.
 
-**Day 1:** Short Response + Case Study Investigation + Yoodli AI Interview
+**Day 1:** Short Response + Yoodli AI Interview
 **Day 2:** Build a Server
 
 **Sections:**
 - [Setup](#setup)
 - [Part 1: Short Response (24 points)](#part-1-short-response-24-points)
 - [Part 2: Yoodli AI Interview (TBD)](#part-2-yoodli-ai-interview-tbd)
-- [Part 3: Case Study Investigation (24 points)](#part-3-case-study-investigation-24-points)
-- [Part 4: Build a Server (34 points)](#part-4-build-a-server-34-points)
+- [Part 3: Build a Server (34 points)](#part-3-build-a-server-34-points)
   - [API Reference](#api-reference)
   - [Step 1: Set Up the Express App (6 pts)](#step-1-set-up-the-express-app-6-pts)
   - [Step 2: Build the Model (8 pts)](#step-2-build-the-model-8-pts)
@@ -19,7 +18,7 @@ This is a 2-day checkpoint assessing your understanding of the first half of the
   - [Step 5: Test with Postman (6 pts)](#step-5-test-with-postman-6-pts)
   - [Code Grading Checklist (34 points)](#code-grading-checklist-34-points)
 
-**Total: 82 points + Yoodli (TBD)**
+**Total: 58 points + Yoodli (TBD)**
 
 **<details><summary>Asking ChatGPT for Help</summary>**
 
@@ -38,7 +37,6 @@ For guidance on setting up and submitting this assignment, refer to the Marcy La
 ```sh
 git checkout -b draft   # switch to the draft branch before starting
 
-cd from-scratch         # navigate to the Build a Server folder
 npm i                   # install dependencies
 npm run dev             # start the server with nodemon
 
@@ -53,7 +51,7 @@ When you are finished, create a pull request and tag your instructor for review.
 
 ## Part 1: Short Response (24 points)
 
-There are 4 short response questions for you to answer in the [`SHORT_RESPONSE.md`](./SHORT_RESPONSE.md) file. Each question is worth 6 points (3 points for writing quality and 3 points for technical content).
+There are 4 short response questions for you to answer in the [`short-response.md`](./short-response.md) file. Each question is worth 6 points (3 points for writing quality and 3 points for technical content).
 
 The questions assess your knowledge of:
 1. Servers and the HTTP request-response cycle
@@ -79,67 +77,23 @@ The roleplays assess your ability to verbally explain:
 
 ---
 
-## Part 3: Case Study Investigation (24 points)
-
-For this section, you will investigate a working Express application called **Bookmark Manager**.
-
-The source code is located in the [`case-study/`](./case-study/) folder. To run the app locally:
-
-```sh
-cd case-study
-npm i
-npm start
-```
-
-The server will start at `http://localhost:8080`. **Keep the terminal open** — you'll observe the server logs as you send Postman requests.
-
-Open the source code and study the file structure:
-
-```
-case-study/
-├── server/
-│   ├── index.js                          # Express app setup, middleware, endpoints
-│   ├── controllers/
-│   │   └── bookmarkControllers.js        # Controller functions for each endpoint
-│   └── models/
-│       └── Bookmark.js                   # In-memory data model
-├── public/
-│   ├── index.html                        # Frontend HTML
-│   ├── styles.css                        # Frontend CSS
-│   └── app.js                            # Frontend JavaScript (fetch calls & DOM helpers)
-└── package.json
-```
-
-Answer the 4 investigation questions in [`CASE_STUDY.md`](./CASE_STUDY.md). Each question is worth 6 points. You will need both the source code and Postman to complete this section.
-
-**Tips:**
-- Read through the code carefully before answering. Start with `server/index.js` to understand the overall structure.
-- Use Postman to send requests to `http://localhost:8080` and observe the responses.
-- Watch the terminal where the server is running — the `logRoutes` middleware prints useful information about each incoming request.
-- Pay close attention to status codes, response bodies, and how data flows between the model, controller, and client.
-
----
-
-## Part 4: Build a Server (34 points)
+## Part 3: Build a Server (34 points)
 
 Build a working Express server with MVC architecture that powers the provided frontend application.
 
-Navigate to the `from-scratch/` folder to work on this section:
-
 ```sh
-cd from-scratch
 npm i
 npm run dev
 ```
 
 **Provided (do not modify):**
-- `from-scratch/public/` — A frontend application (HTML, CSS, and JavaScript) that sends `fetch` requests to your server's API. If your server is implemented correctly, the frontend will work without any changes.
-- `from-scratch/package.json` — Project configuration with `express` as a dependency
+- `frontend/` — A frontend application (HTML, CSS, and JavaScript) that sends `fetch` requests to your server's API. If your server is implemented correctly, the frontend will work without any changes.
+- `package.json` — Project configuration with `express` as a dependency
 
 **Files you complete:**
-- `from-scratch/server/index.js` — Express app setup, middleware, and endpoint definitions
-- `from-scratch/server/models/Pet.js` — In-memory data model
-- `from-scratch/server/controllers/petControllers.js` — Controller functions
+- `server/index.js` — Express app setup, middleware, and endpoint definitions
+- `server/models/Pet.js` — In-memory data model
+- `server/controllers/petControllers.js` — Controller functions
 
 ### API Reference
 
@@ -159,14 +113,14 @@ The frontend expects the following API endpoints to exist on your server:
 
 ### Step 1: Set Up the Express App (6 pts)
 
-In `from-scratch/server/index.js`:
+In `server/index.js`:
 1. Create a `logRoutes` middleware function that logs the method and URL of every request (along with the current time) and calls `next()`
 2. Register middleware in this order: `logRoutes`, `express.json()`, `express.static()`
 3. The server should listen on port `8080`
 
 ### Step 2: Build the Model (8 pts)
 
-In `from-scratch/server/models/Pet.js`:
+In `server/models/Pet.js`:
 1. Create an `id` counter and a `getId()` helper function
 2. Create an in-memory array with 2-3 starter pets (each with an `id` and `name`)
 3. Implement all 5 static methods: `create`, `list`, `find`, `update`, `delete`
@@ -174,7 +128,7 @@ In `from-scratch/server/models/Pet.js`:
 
 ### Step 3: Build the Controllers (10 pts)
 
-In `from-scratch/server/controllers/petControllers.js`:
+In `server/controllers/petControllers.js`:
 1. Import the `Pet` model
 2. Implement all 5 controller functions: `createPet`, `listPets`, `getPet`, `updatePet`, `deletePet`
 3. Each controller should parse inputs from `req`, call the appropriate model method, and send the response with the correct status code
@@ -182,7 +136,7 @@ In `from-scratch/server/controllers/petControllers.js`:
 
 ### Step 4: Define REST Endpoints (4 pts)
 
-In `from-scratch/server/index.js`:
+In `server/index.js`:
 1. Import the controllers
 2. Define all 5 RESTful routes (see the API Reference table above)
 3. Routes should be defined after middleware registration
@@ -204,7 +158,7 @@ You must demonstrate:
 **Express Setup (6 pts)**
 - [ ] Express app is created and listens on a port
 - [ ] `express.json()` middleware is registered
-- [ ] `express.static()` serves the `public/` folder
+- [ ] `express.static()` serves the `frontend/` folder
 - [ ] A custom `logRoutes` middleware logs method and URL for every request
 - [ ] Middleware is registered before routes
 - [ ] Server starts without errors

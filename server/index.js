@@ -18,8 +18,8 @@ const app = express();
 // TODO: Add the express.json() middleware to parse JSON request bodies.
 
 
-// TODO: Serve the public/ folder as static assets using express.static()
-// Hint: use path.join(__dirname, '..', 'public') to construct the filepath
+// TODO: Serve the frontend/ folder as static assets using express.static()
+// Hint: use path.join(__dirname, '..', 'frontend') to construct the filepath
 
 
 /////////////////////
